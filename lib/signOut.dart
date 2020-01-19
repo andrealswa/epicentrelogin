@@ -57,7 +57,10 @@ class _SignOutState extends State<SignOut> {
 
 Widget _buildBody(BuildContext context) {
   return StreamBuilder<QuerySnapshot>(
-    stream: Firestore.instance.collection('guests').snapshots(),
+    stream: Firestore.instance
+        .collection('guests')
+        .where('signedIn', isEqualTo: true)
+        .snapshots(),
     builder: (context, snapshot) {
       if (!snapshot.hasData) return LinearProgressIndicator();
 

@@ -86,7 +86,10 @@ class _SignInState extends State<SignIn> {
 
 Widget _buildBody(BuildContext context) {
   return StreamBuilder<QuerySnapshot>(
-    stream: Firestore.instance.collection('guests').snapshots(),
+    stream: Firestore.instance
+        .collection('guests')
+        .where('signedIn', isEqualTo: false)
+        .snapshots(),
     builder: (context, snapshot) {
       if (!snapshot.hasData) return LinearProgressIndicator();
 
@@ -104,7 +107,6 @@ Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
 
 Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
   final record = Record.fromSnapshot(data);
-
   return Padding(
     key: ValueKey(record.name),
     padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
@@ -117,9 +119,14 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
       child: ListTile(
         title: Text(record.name),
         trailing: Text(record.visits.toString()),
-        onTap: () => record.reference.updateData(
-          {'visits': FieldValue.increment(1)},
-        ),
+        onTap: () {
+          if (record.signedIn == true) {
+            record.reference.updateData({'signedIn': false});
+          } else if (record.signedIn == false) {
+            record.reference.updateData({'signedIn': true});
+          }
+          record.reference.updateData({'visits': FieldValue.increment(1)});
+        },
       ),
     ),
   );
@@ -129,12 +136,15 @@ class Record {
   final String name;
   final int visits;
   final DocumentReference reference;
+  final bool signedIn;
 
   Record.fromMap(Map<String, dynamic> map, {this.reference})
       : assert(map['name'] != null),
         assert(map['visits'] != null),
+        assert(map['signedIn'] != null),
         name = map['name'],
-        visits = map['visits'];
+        visits = map['visits'],
+        signedIn = map['signedIn'];
 
   Record.fromSnapshot(DocumentSnapshot snapshot)
       : this.fromMap(
@@ -143,5 +153,5 @@ class Record {
         );
 
   @override
-  String toString() => "Record<$name:$visits>";
+  String toString() => "Record<$name:$visits:$signedIn>";
 }
