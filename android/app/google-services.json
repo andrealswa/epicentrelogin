@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "825146017049",
+    "firebase_url": "https://epicentrelogin.firebaseio.com",
+    "project_id": "epicentrelogin",
+    "storage_bucket": "epicentrelogin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:825146017049:android:609ef9526935c837e63188",
+        "android_client_info": {
+          "package_name": "com.example.epicentrelogin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "825146017049-h7tbc7bv250h9gurhu0iugevpk05t74r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB67WG9ihqp_8Dm2g3Xko8Fu7mK0nYLPG4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "825146017049-h7tbc7bv250h9gurhu0iugevpk05t74r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
