@@ -11,6 +11,25 @@ class SignIn extends StatefulWidget {
 
 class _SignInState extends State<SignIn> {
   final _formKey = GlobalKey<FormState>();
+  final myController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    // Start listening to changes to the text form field.
+    myController.addListener(_printLatestValue);
+  }
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is removed from the widget tree.
+    myController.dispose();
+    super.dispose();
+  }
+
+  _printLatestValue() {
+    print("Second text field: ${myController.text}");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,23 +114,10 @@ class _SignInState extends State<SignIn> {
             ),
             Spacer(flex: 2),
             Text('Search For Your Name'),
-            Form(
-              key: _formKey,
-              child: Column(
-                children: <Widget>[
-                  // Add TextFormFields and RaisedButton here.
-                  TextFormField(
-                    // The validator receives the text that the user has entered.
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'Please enter some text';
-                      }
-                      return null;
-                    },
-                  ),
-                ],
-              ),
+            TextField(
+              controller: myController,
             ),
+            Text(myController.text),
             Expanded(flex: 3, child: _buildBody(context)),
             Spacer(flex: 3),
           ],
@@ -149,7 +155,7 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
     padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
     child: Container(
       decoration: BoxDecoration(
-        color: Colors.lightBlue,
+        color: Color(0xffefefef),
         border: Border.all(color: Colors.grey),
         borderRadius: BorderRadius.circular(5.0),
       ),
@@ -158,7 +164,7 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
           children: <Widget>[
             Icon(
               Icons.touch_app,
-              color: Colors.white,
+              color: Colors.grey,
               size: 35.0,
               semanticLabel: 'Text to announce in accessibility modes',
             ),

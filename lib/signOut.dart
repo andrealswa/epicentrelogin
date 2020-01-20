@@ -132,7 +132,7 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
             Container(
               child: Icon(
                 Icons.touch_app,
-                color: Colors.black,
+                color: Colors.grey,
                 size: 35.0,
                 semanticLabel: 'Text to announce in accessibility modes',
               ),
