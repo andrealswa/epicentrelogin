@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'signIn.newUser.dart';
 
 class SignIn extends StatefulWidget {
   SignIn({Key key}) : super(key: key);
@@ -30,7 +31,7 @@ class _SignInState extends State<SignIn> {
       child: Scaffold(
         backgroundColor: Color(0x00000000),
         appBar: AppBar(
-          title: Text('EPICentre & Makers Space Login'),
+          title: Text('EPICentre & Makers Space Login - Returning Visitor'),
           flexibleSpace: Container(
             decoration: new BoxDecoration(
               gradient: new LinearGradient(
@@ -47,8 +48,53 @@ class _SignInState extends State<SignIn> {
         ),
         body: Column(
           children: <Widget>[
+            Container(
+              margin: const EdgeInsets.fromLTRB(20.0, 0, 20.0, 0),
+              child: SizedBox(
+                width: double.infinity,
+                child: RaisedButton(
+                  color: Color(0xffefefef),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.only(
+                          bottomLeft: const Radius.circular(50.0),
+                          bottomRight: const Radius.circular(50.0)),
+                      side: BorderSide(color: Color(0xffefefef))),
+                  onPressed: () {
+                    Route route = MaterialPageRoute(
+                      builder: (context) => newUser(),
+                    );
+                    Navigator.push(context, route);
+                  },
+                  textColor: Colors.white,
+                  padding: const EdgeInsets.all(0.0),
+                  child: Container(
+                    padding: const EdgeInsets.all(30),
+                    child: Row(
+                      children: <Widget>[
+                        GradientText(
+                          'First Time Visiting? Click Here To Enter Your Info',
+                          gradient: LinearGradient(colors: [
+                            Color(0xff3cc3fa),
+                            Color(0xff42c9a5),
+                            Color(0xff4bda3c),
+                          ]),
+                        ),
+                        Spacer(),
+                        Icon(
+                          Icons.edit,
+                          color: Color(0xff4bda3c),
+                          size: 35.0,
+                          semanticLabel:
+                              'Text to announce in accessibility modes',
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
             Spacer(flex: 2),
-            Text('Enter Your Name'),
+            Text('Search For Your Name'),
             Form(
               key: _formKey,
               child: Column(
@@ -62,15 +108,6 @@ class _SignInState extends State<SignIn> {
                       }
                       return null;
                     },
-                  ),
-                  RaisedButton(
-                    onPressed: () {
-                      if (_formKey.currentState.validate()) {
-                        Scaffold.of(context).showSnackBar(
-                            SnackBar(content: Text('Processing Data')));
-                      }
-                    },
-                    child: Text('Submit Your Name'),
                   ),
                 ],
               ),
@@ -117,7 +154,19 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
         borderRadius: BorderRadius.circular(5.0),
       ),
       child: ListTile(
-        title: Text(record.name),
+        title: Row(
+          children: <Widget>[
+            Icon(
+              Icons.touch_app,
+              color: Colors.white,
+              size: 35.0,
+              semanticLabel: 'Text to announce in accessibility modes',
+            ),
+            Text("Sign In"),
+            SizedBox(width: 20), // give it width
+            Text(record.name),
+          ],
+        ),
         trailing: Text(record.visits.toString()),
         onTap: () {
           if (record.signedIn == true) {
@@ -154,4 +203,31 @@ class Record {
 
   @override
   String toString() => "Record<$name:$visits:$signedIn>";
+}
+
+class GradientText extends StatelessWidget {
+  GradientText(
+    this.text, {
+    @required this.gradient,
+  });
+
+  final String text;
+  final Gradient gradient;
+
+  @override
+  Widget build(BuildContext context) {
+    return ShaderMask(
+      shaderCallback: (bounds) => gradient.createShader(
+        Rect.fromLTWH(0, 0, bounds.width, bounds.height),
+      ),
+      child: Text(
+        text,
+        style: TextStyle(
+          // The color must be set to white for this to work
+          color: Colors.white,
+          fontSize: 30,
+        ),
+      ),
+    );
+  }
 }

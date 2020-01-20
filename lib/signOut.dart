@@ -28,7 +28,7 @@ class _SignOutState extends State<SignOut> {
       child: Scaffold(
         backgroundColor: Color(0x00000000),
         appBar: AppBar(
-          title: Text('EPICentre & Makers Space Login'),
+          title: Text('EPICentre & Makers Space Login - Sign Out'),
           flexibleSpace: Container(
             decoration: new BoxDecoration(
               gradient: new LinearGradient(
@@ -45,7 +45,46 @@ class _SignOutState extends State<SignOut> {
         ),
         body: Column(
           children: <Widget>[
-            Text('This is the Sign Out'),
+            Container(
+              margin: const EdgeInsets.fromLTRB(20.0, 0, 20.0, 0),
+              child: SizedBox(
+                width: double.infinity,
+                child: RaisedButton(
+                  color: Color(0xffefefef),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.only(
+                          bottomLeft: const Radius.circular(50.0),
+                          bottomRight: const Radius.circular(50.0)),
+                      side: BorderSide(color: Color(0xffefefef))),
+                  onPressed: () {},
+                  textColor: Colors.white,
+                  padding: const EdgeInsets.all(0.0),
+                  child: Container(
+                    padding: const EdgeInsets.all(30),
+                    child: Row(
+                      children: <Widget>[
+                        GradientText(
+                          'Tap on your name below to Sign Out',
+                          gradient: LinearGradient(colors: [
+                            Color(0xfff6834c),
+                            Color(0xfff66277),
+                            Color(0xffec4998),
+                          ]),
+                        ),
+                        Spacer(),
+                        Icon(
+                          Icons.arrow_downward,
+                          color: Color(0xffec4998),
+                          size: 35.0,
+                          semanticLabel:
+                              'Text to announce in accessibility modes',
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
             Expanded(flex: 3, child: _buildBody(context)),
             Spacer(flex: 3),
           ],
@@ -83,12 +122,26 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
     padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
     child: Container(
       decoration: BoxDecoration(
-        color: Colors.lightBlue,
+        color: Color(0xffefefef),
         border: Border.all(color: Colors.grey),
         borderRadius: BorderRadius.circular(5.0),
       ),
       child: ListTile(
-        title: Text(record.name),
+        title: Row(
+          children: <Widget>[
+            Container(
+              child: Icon(
+                Icons.touch_app,
+                color: Colors.black,
+                size: 35.0,
+                semanticLabel: 'Text to announce in accessibility modes',
+              ),
+            ),
+            Text('Tap here to Sign Out'),
+            SizedBox(width: 25),
+            Text(record.name),
+          ],
+        ),
         trailing: Text(record.visits.toString()),
         onTap: () {
           if (record.signedIn == true) {
@@ -125,4 +178,31 @@ class Record {
 
   @override
   String toString() => "Record<$name:$visits:$signedIn>";
+}
+
+class GradientText extends StatelessWidget {
+  GradientText(
+    this.text, {
+    @required this.gradient,
+  });
+
+  final String text;
+  final Gradient gradient;
+
+  @override
+  Widget build(BuildContext context) {
+    return ShaderMask(
+      shaderCallback: (bounds) => gradient.createShader(
+        Rect.fromLTWH(0, 0, bounds.width, bounds.height),
+      ),
+      child: Text(
+        text,
+        style: TextStyle(
+          // The color must be set to white for this to work
+          color: Colors.white,
+          fontSize: 30,
+        ),
+      ),
+    );
+  }
 }
