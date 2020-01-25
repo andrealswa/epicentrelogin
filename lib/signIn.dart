@@ -31,6 +31,8 @@ class _SignInState extends State<SignIn> {
     print("Second text field: ${myController.text}");
   }
 
+  String _testName = "";
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -113,11 +115,25 @@ class _SignInState extends State<SignIn> {
               ),
             ),
             Spacer(flex: 2),
-            Text('Search For Your Name'),
+            Text(
+              'Search For Your Name',
+              style: TextStyle(
+                fontSize: 20.0, // insert your font size here
+              ),
+            ),
             TextField(
               controller: myController,
+              onChanged: (text) {
+                setState(() {
+                  this._testName = text;
+                });
+
+                final alphanumeric = RegExp(r'^' + r'' + this._testName + r'$');
+                print(alphanumeric.hasMatch('abc123')); // true
+                print(alphanumeric.hasMatch('abc123%')); // false
+              },
             ),
-            Text(myController.text),
+            Text(this._testName),
             Expanded(flex: 3, child: _buildBody(context)),
             Spacer(flex: 3),
           ],
