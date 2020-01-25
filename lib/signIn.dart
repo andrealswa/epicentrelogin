@@ -127,7 +127,6 @@ class _SignInState extends State<SignIn> {
                 setState(() {
                   this._testName = text;
                 });
-
                 final alphanumeric = RegExp(r'^' + r'' + this._testName + r'$');
                 print(alphanumeric.hasMatch('abc123')); // true
                 print(alphanumeric.hasMatch('abc123%')); // false
