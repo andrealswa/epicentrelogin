@@ -52,7 +52,7 @@ class _SignInState extends State<SignIn> {
       child: Scaffold(
         backgroundColor: Color(0x00000000),
         appBar: AppBar(
-          title: Text('Returning Guest'),
+          title: Text('Returning Guest Sign In'),
           flexibleSpace: Container(
             decoration: new BoxDecoration(
               gradient: new LinearGradient(
@@ -184,7 +184,7 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
               size: 35.0,
               semanticLabel: 'Text to announce in accessibility modes',
             ),
-            Text("Sign In"),
+            Text("Tap to Sign In"),
             SizedBox(width: 20), // give it width
             Text(record.name),
           ],

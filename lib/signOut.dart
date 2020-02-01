@@ -28,7 +28,7 @@ class _SignOutState extends State<SignOut> {
       child: Scaffold(
         backgroundColor: Color(0x00000000),
         appBar: AppBar(
-          title: Text('Sign Out'),
+          title: Text('Guest Sign Out'),
           flexibleSpace: Container(
             decoration: new BoxDecoration(
               gradient: new LinearGradient(
