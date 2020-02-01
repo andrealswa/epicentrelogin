@@ -64,7 +64,7 @@ class _SignOutState extends State<SignOut> {
                     child: Row(
                       children: <Widget>[
                         GradientText(
-                          'Tap to Sign Out',
+                          'Tap Your Name to Sign Out',
                           gradient: LinearGradient(colors: [
                             Color(0xfff6834c),
                             Color(0xfff66277),
@@ -72,13 +72,6 @@ class _SignOutState extends State<SignOut> {
                           ]),
                         ),
                         Spacer(),
-                        Icon(
-                          Icons.arrow_downward,
-                          color: Color(0xffec4998),
-                          size: 35.0,
-                          semanticLabel:
-                              'Text to announce in accessibility modes',
-                        ),
                       ],
                     ),
                   ),
