@@ -245,7 +245,7 @@ class _newUserState extends State<newUser> {
                               globalKey.currentState.showSnackBar(snackBar);
                             }
                           },
-                          child: Text('Sign In'),
+                          child: Text('Tap to Sign In'),
                         ),
                       ),
 

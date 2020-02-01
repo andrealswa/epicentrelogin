@@ -136,7 +136,7 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
                 semanticLabel: 'Text to announce in accessibility modes',
               ),
             ),
-            Text('Tap here to Sign Out'),
+            Text('Tap to Sign Out'),
             SizedBox(width: 25),
             Text(record.name),
           ],
