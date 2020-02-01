@@ -28,7 +28,7 @@ class _SignOutState extends State<SignOut> {
       child: Scaffold(
         backgroundColor: Color(0x00000000),
         appBar: AppBar(
-          title: Text('EPICentre & Makers Space Login - Sign Out'),
+          title: Text('Sign Out'),
           flexibleSpace: Container(
             decoration: new BoxDecoration(
               gradient: new LinearGradient(
@@ -64,7 +64,7 @@ class _SignOutState extends State<SignOut> {
                     child: Row(
                       children: <Widget>[
                         GradientText(
-                          'Tap on your name below to Sign Out',
+                          'Tap to Sign Out',
                           gradient: LinearGradient(colors: [
                             Color(0xfff6834c),
                             Color(0xfff66277),
@@ -86,7 +86,6 @@ class _SignOutState extends State<SignOut> {
               ),
             ),
             Expanded(flex: 3, child: _buildBody(context)),
-            Spacer(flex: 3),
           ],
         ),
       ),

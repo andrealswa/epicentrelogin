@@ -52,7 +52,7 @@ class _SignInState extends State<SignIn> {
       child: Scaffold(
         backgroundColor: Color(0x00000000),
         appBar: AppBar(
-          title: Text('EPICentre & Makers Space Login - Returning Visitor'),
+          title: Text('Returning Guest'),
           flexibleSpace: Container(
             decoration: new BoxDecoration(
               gradient: new LinearGradient(
@@ -89,11 +89,11 @@ class _SignInState extends State<SignIn> {
                   textColor: Colors.white,
                   padding: const EdgeInsets.all(0.0),
                   child: Container(
-                    padding: const EdgeInsets.all(30),
+                    padding: const EdgeInsets.all(25),
                     child: Row(
                       children: <Widget>[
                         GradientText(
-                          'First Time Visiting? Click Here To Enter Your Info',
+                          'New Guest',
                           gradient: LinearGradient(colors: [
                             Color(0xff3cc3fa),
                             Color(0xff42c9a5),
@@ -114,11 +114,13 @@ class _SignInState extends State<SignIn> {
                 ),
               ),
             ),
-            Spacer(flex: 2),
-            Text(
-              'Search For Your Name',
-              style: TextStyle(
-                fontSize: 20.0, // insert your font size here
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 30, 0, 5),
+              child: Text(
+                'Search For Your Name',
+                style: TextStyle(
+                  fontSize: 25.0, // insert your font size here
+                ),
               ),
             ),
             TextField(
@@ -134,7 +136,6 @@ class _SignInState extends State<SignIn> {
             ),
             Text(this._testName),
             Expanded(flex: 3, child: _buildBody(context)),
-            Spacer(flex: 3),
           ],
         ),
       ),

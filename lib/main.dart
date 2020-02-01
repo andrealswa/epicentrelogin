@@ -89,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       textColor: Colors.white,
                       padding: const EdgeInsets.all(0.0),
                       child: Container(
-                        padding: const EdgeInsets.all(180),
+                        padding: const EdgeInsets.all(20),
                         child: GradientText(
                           'Sign In',
                           gradient: LinearGradient(colors: [
@@ -142,7 +142,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       textColor: Colors.white,
                       padding: const EdgeInsets.all(0.0),
                       child: Container(
-                        padding: const EdgeInsets.all(180),
+                        padding: const EdgeInsets.all(20),
                         child: GradientText(
                           'Sign Out',
                           gradient: LinearGradient(colors: [
