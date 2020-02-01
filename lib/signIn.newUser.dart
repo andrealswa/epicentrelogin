@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class newUser extends StatefulWidget {
   newUser({Key key}) : super(key: key);
@@ -11,7 +12,10 @@ class _newUserState extends State<newUser> {
   // Guess this key is for data
   final _formKey = GlobalKey<FormState>();
   final double _fontSizeValue = 20.0;
-  final globalKey = GlobalKey<ScaffoldState>();
+  final _globalKey = GlobalKey<ScaffoldState>();
+
+  // Firebase instance object
+  final databaseReference = Firestore.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +35,7 @@ class _newUserState extends State<newUser> {
           ),
         ),
         child: Scaffold(
-          key: globalKey,
+          key: _globalKey,
           backgroundColor: Color(0x00000000),
           appBar: AppBar(
             title: Text('New Guest'),
@@ -239,10 +243,24 @@ class _newUserState extends State<newUser> {
                               // If the form is valid, display a snackbar. In the real world,
                               // you'd often call a server or save the information in a database.
 
+                              // Do database queries here
+                              void createRecord() async {
+                                await databaseReference
+                                    .collection("guests")
+                                    .document() // Leave empty for firestore to autogenerate the document id
+                                    .setData({
+                                  'name': 'Andrea Swartz',
+                                  'signedIn': true,
+                                  'visits': 44,
+                                });
+                              }
+
+                              createRecord();
+
                               final snackBar = SnackBar(
                                   content: Text(
                                       'Information Saved: You Have Been Signed In'));
-                              globalKey.currentState.showSnackBar(snackBar);
+                              _globalKey.currentState.showSnackBar(snackBar);
                             }
                           },
                           child: Text('Sign In'),

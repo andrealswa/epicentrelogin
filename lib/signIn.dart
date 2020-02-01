@@ -117,22 +117,26 @@ class _SignInState extends State<SignIn> {
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 30, 0, 5),
               child: Text(
-                'Search For Your Name',
+                'Search for Your Name',
                 style: TextStyle(
                   fontSize: 25.0, // insert your font size here
                 ),
               ),
             ),
-            TextField(
-              controller: myController,
-              onChanged: (text) {
-                setState(() {
-                  this._testName = text;
-                });
-                final alphanumeric = RegExp(r'^' + r'' + this._testName + r'$');
-                print(alphanumeric.hasMatch('abc123')); // true
-                print(alphanumeric.hasMatch('abc123%')); // false
-              },
+            Padding(
+              padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+              child: TextField(
+                controller: myController,
+                onChanged: (text) {
+                  setState(() {
+                    this._testName = text;
+                  });
+                  final alphanumeric =
+                      RegExp(r'^' + r'' + this._testName + r'$');
+                  print(alphanumeric.hasMatch('abc123')); // true
+                  print(alphanumeric.hasMatch('abc123%')); // false
+                },
+              ),
             ),
             Text(this._testName),
             Expanded(flex: 3, child: _buildBody(context)),
@@ -167,7 +171,7 @@ Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
 Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
   final record = Record.fromSnapshot(data);
   return Padding(
-    key: ValueKey(record.name),
+    key: ValueKey(record.hashCode),
     padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
     child: Container(
       decoration: BoxDecoration(

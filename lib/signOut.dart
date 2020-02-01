@@ -110,7 +110,8 @@ Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
 Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
   final record = Record.fromSnapshot(data);
   return Padding(
-    key: ValueKey(record.name),
+    // key: ValueKey(record.name), OLD
+    key: ValueKey(record.hashCode),
     padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
     child: Container(
       decoration: BoxDecoration(
