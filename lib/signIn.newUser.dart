@@ -13,6 +13,11 @@ class _newUserState extends State<newUser> {
   final _formKey = GlobalKey<FormState>();
   final double _fontSizeValue = 20.0;
   final _globalKey = GlobalKey<ScaffoldState>();
+  String _globalFirstName = "";
+  String _globalLastName = "";
+  String _globalOrganization = "";
+  String _globalEmail = "";
+  String _globalPurpose = "";
 
   // Firebase instance object
   final databaseReference = Firestore.instance;
@@ -65,6 +70,9 @@ class _newUserState extends State<newUser> {
 //
 
                       TextFormField(
+                        onChanged: (String value) async {
+                          _globalFirstName = value;
+                        },
                         decoration: InputDecoration(
                           suffix: GestureDetector(
                             onTap: () {
@@ -99,6 +107,9 @@ class _newUserState extends State<newUser> {
 //
 
                       TextFormField(
+                        onChanged: (String value) async {
+                          _globalLastName = value;
+                        },
                         decoration: InputDecoration(
                           suffix: GestureDetector(
                             onTap: () {
@@ -133,6 +144,9 @@ class _newUserState extends State<newUser> {
                       //
 
                       TextFormField(
+                        onChanged: (String value) async {
+                          _globalOrganization = value;
+                        },
                         decoration: InputDecoration(
                           suffix: GestureDetector(
                             onTap: () {
@@ -167,6 +181,9 @@ class _newUserState extends State<newUser> {
 //
 
                       TextFormField(
+                        onChanged: (String value) async {
+                          _globalEmail = value;
+                        },
                         decoration: InputDecoration(
                           suffix: GestureDetector(
                             onTap: () {
@@ -201,6 +218,9 @@ class _newUserState extends State<newUser> {
 //
 
                       TextFormField(
+                        onChanged: (String value) async {
+                          _globalPurpose = value;
+                        },
                         decoration: InputDecoration(
                           suffix: GestureDetector(
                             onTap: () {
@@ -249,10 +269,11 @@ class _newUserState extends State<newUser> {
                                     .collection("guests")
                                     .document() // Leave empty for firestore to autogenerate the document id
                                     .setData({
-                                  'name': 'Andrea Swartz',
-                                  'organization': 'EPICentre',
-                                  'email': 'gmail@gmail.com',
-                                  'purpose': 'student',
+                                  'name':
+                                      _globalFirstName + " " + _globalLastName,
+                                  'organization': _globalOrganization,
+                                  'email': _globalEmail,
+                                  'purpose': _globalPurpose,
                                   'signedIn': true,
                                   'visits': 1,
                                 });
