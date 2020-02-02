@@ -163,18 +163,49 @@ Widget _buildBody(BuildContext context, String _testName) {
     builder: (context, snapshot) {
       if (!snapshot.hasData) return LinearProgressIndicator();
 
-      return _buildList(context, snapshot.data.documents);
+      return _buildList(context, snapshot.data.documents, _testName);
     },
   );
 }
 
-Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
+Widget _buildList(
+    BuildContext context, List<DocumentSnapshot> snapshot, String _testName) {
   // Make a list to hold the data so we can modify and filter it, as opposed to placing it in the children property
 
-  List<Widget> myList =
-      snapshot.map((data) => _buildListItem(context, data)).toList();
-  print("MY LIST: ");
-  print(myList);
+  print("Snapshot:");
+  print(snapshot);
+
+  List<DocumentSnapshot> myDocSnapList = [];
+  snapshot.forEach((element) {
+    myDocSnapList.add(element);
+  });
+
+  List<Record> myRecordList = [];
+  myDocSnapList.forEach((element) {
+    Record.fromSnapshot(element);
+    myRecordList.add(Record.fromSnapshot(element));
+  });
+
+  // print(myRecordList);
+  List<Record> filteredRecordList = [];
+  myRecordList.forEach((element) {
+    String lowercaseName = element.name.toLowerCase();
+    String trimmedName = lowercaseName.replaceAll(' ', '');
+
+    String lowerFilter = _testName.toLowerCase();
+    String trimFilter = lowerFilter.replaceAll(' ', '');
+
+    if (trimmedName.contains(trimFilter)) {
+      filteredRecordList.add(element);
+    }
+  });
+  // print(filteredRecordList);
+
+  List<Widget> myList = filteredRecordList
+      .map((record) => _buildListItem(context, record))
+      .toList();
+  // print("MY LIST: ");
+  // print(myList);
   // Returns to this area before display
 
   return ListView(
@@ -184,8 +215,8 @@ Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
 }
 
 // This is the actual structure of the record to display to the user
-Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
-  final record = Record.fromSnapshot(data);
+Widget _buildListItem(BuildContext context, Record record) {
+  // final record = Record.fromSnapshot(data);
   return Padding(
     key: ValueKey(record.hashCode),
     padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
