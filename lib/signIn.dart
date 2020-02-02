@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'signIn.newUser.dart';
@@ -28,7 +30,7 @@ class _SignInState extends State<SignIn> {
   }
 
   _printLatestValue() {
-    print("Second text field: ${myController.text}");
+    // print("Second text field: ${myController.text}");
   }
 
   String _testName = "";
@@ -133,13 +135,13 @@ class _SignInState extends State<SignIn> {
                   });
                   final alphanumeric =
                       RegExp(r'^' + r'' + this._testName + r'$');
-                  print(alphanumeric.hasMatch('abc123')); // true
-                  print(alphanumeric.hasMatch('abc123%')); // false
+                  // print(alphanumeric.hasMatch('abc123')); // true
+                  // print(alphanumeric.hasMatch('abc123%')); // false
                 },
               ),
             ),
             Text(this._testName),
-            Expanded(flex: 3, child: _buildBody(context)),
+            Expanded(flex: 3, child: _buildBody(context, _testName)),
           ],
         ),
       ),
@@ -147,7 +149,12 @@ class _SignInState extends State<SignIn> {
   }
 }
 
-Widget _buildBody(BuildContext context) {
+///////////////////////////////////////////
+///////////////////////////////////////////
+///////////////////////////////////////////
+
+Widget _buildBody(BuildContext context, String _testName) {
+  //print("PASSED IN" + _testName);
   return StreamBuilder<QuerySnapshot>(
     stream: Firestore.instance
         .collection('guests')
@@ -162,12 +169,21 @@ Widget _buildBody(BuildContext context) {
 }
 
 Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
+  // Make a list to hold the data so we can modify and filter it, as opposed to placing it in the children property
+
+  List<Widget> myList =
+      snapshot.map((data) => _buildListItem(context, data)).toList();
+  print("MY LIST: ");
+  print(myList);
+  // Returns to this area before display
+
   return ListView(
     padding: const EdgeInsets.only(top: 20.0),
-    children: snapshot.map((data) => _buildListItem(context, data)).toList(),
+    children: myList,
   );
 }
 
+// This is the actual structure of the record to display to the user
 Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
   final record = Record.fromSnapshot(data);
   return Padding(
@@ -207,6 +223,11 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
   );
 }
 
+////////////////////////////////////////////
+////////////////////////////////////////////
+////////////////////////////////////////////
+
+// This is just an interface to layout a record safely for the data
 class Record {
   final String name;
   final int visits;
