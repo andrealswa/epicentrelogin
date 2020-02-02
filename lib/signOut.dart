@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:epicentrelogin/main.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class SignOut extends StatefulWidget {
   SignOut({Key key}) : super(key: key);
@@ -101,14 +103,22 @@ Widget _buildBody(BuildContext context) {
 }
 
 Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
+  List<Record> myRecordList = [];
+  snapshot.forEach((docsnap) {
+    myRecordList.add(Record.fromSnapshot(docsnap));
+  });
+  myRecordList.sort((a, b) {
+    return b.visits.compareTo(a.visits);
+  });
+
   return ListView(
     padding: const EdgeInsets.only(top: 20.0),
-    children: snapshot.map((data) => _buildListItem(context, data)).toList(),
+    children:
+        myRecordList.map((record) => _buildListItem(context, record)).toList(),
   );
 }
 
-Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
-  final record = Record.fromSnapshot(data);
+Widget _buildListItem(BuildContext context, Record record) {
   return Padding(
     // key: ValueKey(record.name), OLD
     key: ValueKey(record.hashCode),
@@ -143,6 +153,21 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
             record.reference.updateData({'signedIn': true});
           }
           record.reference.updateData({'visits': FieldValue.increment(0)});
+
+          Alert(
+            context: context,
+            type: AlertType.success,
+            buttons: [],
+            title: "GOODBYE ${record.name.toUpperCase()}",
+            desc: "You are now signed out!",
+          ).show();
+
+          Future.delayed(const Duration(milliseconds: 2000), () {
+            Route route = MaterialPageRoute(
+              builder: (context) => MyApp(),
+            );
+            Navigator.popUntil(context, ModalRoute.withName('/'));
+          });
         },
       ),
     ),

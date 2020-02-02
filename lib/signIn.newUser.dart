@@ -1,3 +1,7 @@
+import 'dart:io';
+import 'package:rflutter_alert/rflutter_alert.dart';
+
+import 'package:epicentrelogin/main.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -285,6 +289,24 @@ class _newUserState extends State<newUser> {
                                   content: Text(
                                       'Information Saved: You Have Been Signed In'));
                               _globalKey.currentState.showSnackBar(snackBar);
+
+                              Alert(
+                                context: context,
+                                type: AlertType.success,
+                                buttons: [],
+                                title:
+                                    "WELCOME ${_globalFirstName.toUpperCase() + " " + _globalLastName.toUpperCase()}",
+                                desc: "You are now registered and signed in!",
+                              ).show();
+
+                              Future.delayed(const Duration(milliseconds: 2000),
+                                  () {
+                                Route route = MaterialPageRoute(
+                                  builder: (context) => MyApp(),
+                                );
+                                Navigator.popUntil(
+                                    context, ModalRoute.withName('/'));
+                              });
                             }
                           },
                           child: Text('Sign In'),

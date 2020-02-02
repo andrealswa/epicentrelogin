@@ -1,4 +1,6 @@
-import 'dart:ffi';
+// import 'dart:ffi';
+import 'package:epicentrelogin/main.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -87,6 +89,7 @@ class _SignInState extends State<SignIn> {
                       builder: (context) => newUser(),
                     );
                     Navigator.push(context, route);
+                    // Navigator.popUntil(context, predicate)
                   },
                   textColor: Colors.white,
                   padding: const EdgeInsets.all(0.0),
@@ -200,6 +203,9 @@ Widget _buildList(
     }
   });
   // print(filteredRecordList);
+  filteredRecordList.sort((a, b) {
+    return b.visits.compareTo(a.visits);
+  });
 
   List<Widget> myList = filteredRecordList
       .map((record) => _buildListItem(context, record))
@@ -248,6 +254,20 @@ Widget _buildListItem(BuildContext context, Record record) {
             record.reference.updateData({'signedIn': true});
           }
           record.reference.updateData({'visits': FieldValue.increment(1)});
+          Alert(
+            context: context,
+            type: AlertType.success,
+            buttons: [],
+            title: "WELCOME ${record.name.toUpperCase()}",
+            desc: "You are now signed in!",
+          ).show();
+
+          Future.delayed(const Duration(milliseconds: 1500), () {
+            Route route = MaterialPageRoute(
+              builder: (context) => MyApp(),
+            );
+            Navigator.popUntil(context, ModalRoute.withName('/'));
+          });
         },
       ),
     ),
