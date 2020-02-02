@@ -142,7 +142,7 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
           } else if (record.signedIn == false) {
             record.reference.updateData({'signedIn': true});
           }
-          record.reference.updateData({'visits': FieldValue.increment(1)});
+          record.reference.updateData({'visits': FieldValue.increment(0)});
         },
       ),
     ),

@@ -250,8 +250,11 @@ class _newUserState extends State<newUser> {
                                     .document() // Leave empty for firestore to autogenerate the document id
                                     .setData({
                                   'name': 'Andrea Swartz',
+                                  'organization': 'EPICentre',
+                                  'email': 'gmail@gmail.com',
+                                  'purpose': 'student',
                                   'signedIn': true,
-                                  'visits': 44,
+                                  'visits': 1,
                                 });
                               }
 
